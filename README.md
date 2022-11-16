@@ -28,31 +28,29 @@
 
 ## Installation
 
-
-
-1. Clone the git repository
-
-   ```bash
-   git clone https://github.com/klavenj/open-forum-backend.git
-   ```
-
-1. Go into the project directory
-
-   ```bash
-   cd open-forum-backend/
-   ```
-
-1. Checkout working branch
-
-   ```bash
-   git checkout -b <branch>
-   ```
-
-1. Install NPM dependencies
+Clone the git repository
 
 ```bash
-   npm i
- ```
+git clone https://github.com/klavenj/open-forum-backend.git
+```
+
+Go into the project directory
+
+```bash
+cd open-forum-backend/
+```
+
+Checkout working branch
+
+```bash
+git checkout -b <branch>
+```
+
+Install NPM dependencies
+
+```bash
+npm i
+```
 ---
 
 ## Running the app
@@ -83,7 +81,7 @@ $ npm run test:cov
 
 ---
 
-### Commitizen
+## Commitizen
 
 [commitizen](https://github.com/commitizen/cz-cli) is a command line utility that makes it easier to create commit messages following the [conventional commit format](https://conventionalcommits.org) specification.
 
@@ -96,6 +94,21 @@ Use `git cz` instead of `git commit` to use commitizen.
 **Configuration file**: [`.czrc`](./.czrc).
 
 ---
+
+## Linting
+
+To format the code run:
+
+```bash
+npm run prettier:write
+```
+
+
+To check for any linting violations run:
+
+```bash
+npm run prettier:check
+```
 
 
 
