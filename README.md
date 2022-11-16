@@ -113,7 +113,7 @@ npm run prettier:write
 ```
 
 
-To check for any linting violations run:
+To check for any prettier violations run:
 
 ```bash
 npm run prettier:check
