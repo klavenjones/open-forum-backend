@@ -95,7 +95,16 @@ Use `git cz` instead of `git commit` to use commitizen.
 
 ---
 
-## Linting
+## Linting & Formatting
+
+
+To check the linting in your code run:
+
+```bash
+npm run lint
+```
+
+
 
 To format the code run:
 
