@@ -28,9 +28,32 @@
 
 ## Installation
 
+
+
+1. Clone the git repository
+
+   ```bash
+   git clone https://github.com/klavenj/open-forum-backend.git
+   ```
+
+1. Go into the project directory
+
+   ```bash
+   cd open-forum-backend/
+   ```
+
+1. Checkout working branch
+
+   ```bash
+   git checkout -b <branch>
+   ```
+
+1. Install NPM dependencies
+
 ```bash
-$ npm install
-```
+   npm i
+ ```
+---
 
 ## Running the app
 
@@ -44,7 +67,7 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
-
+---
 ## Test
 
 ```bash
@@ -57,6 +80,25 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+---
+
+### Commitizen
+
+[commitizen](https://github.com/commitizen/cz-cli) is a command line utility that makes it easier to create commit messages following the [conventional commit format](https://conventionalcommits.org) specification.
+
+Use `git cz` instead of `git commit` to use commitizen.
+
+**Note** If there is an issue running it in VS CODE use the command `git cz`
+
+[![Add and commit with Commitizen](https://github.com/commitizen/cz-cli/raw/master/meta/screenshots/add-commit.png)](https://github.com/commitizen/cz-cli/raw/master/meta/screenshots/add-commit.png)
+
+**Configuration file**: [`.czrc`](./.czrc).
+
+---
+
+
+
 
 ## Support
 
