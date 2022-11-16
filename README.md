@@ -87,7 +87,7 @@ $ npm run test:cov
 
 Use `git cz` instead of `git commit` to use commitizen.
 
-**Note** If there is an issue running it in VS CODE use the command `git cz`
+**Note** If there is an issue running it in VS CODE use the command `npx cz`
 
 [![Add and commit with Commitizen](https://github.com/commitizen/cz-cli/raw/master/meta/screenshots/add-commit.png)](https://github.com/commitizen/cz-cli/raw/master/meta/screenshots/add-commit.png)
 
