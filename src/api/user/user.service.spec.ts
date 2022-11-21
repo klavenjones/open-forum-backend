@@ -8,7 +8,12 @@ describe('UserService', () => {
   let service: UserService;
   let userRepository: Repository<User>;
 
-  const testUser = { username: 'TESTUSER', isAdmin: false };
+  const testUser = {
+    username: 'TESTUSER',
+    isAdmin: false,
+    createdAt: new Date(Date.now()),
+    updatedAt: new Date(Date.now()),
+  };
   const USER_REPOSITORY_TOKEN = getRepositoryToken(User);
 
   beforeEach(async () => {
@@ -40,13 +45,7 @@ describe('UserService', () => {
   });
 
   describe('createUser', () => {
-    it('should call userRepository.create with correct parameters', async () => {
-      const user = await service.createUser({ username: 'TESTUSER', isAdmin: false });
-
-      expect(userRepository.create).toHaveBeenCalledWith({ ...testUser });
-    });
-
-    it('should call userRepository.save with correct parameters', async () => {
+    it('should call the userRepository.save method with the correct parameters', async () => {
       jest.spyOn(userRepository, 'create').mockReturnValueOnce({
         id: 1,
         ...testUser,
@@ -62,16 +61,21 @@ describe('UserService', () => {
   });
 
   describe('findAll', () => {
-    it('should be called userRepository.find once', async () => {
+    it('should call the userRepository.find method', async () => {
       await service.findAll();
       expect(userRepository.find).toHaveBeenCalled();
     });
   });
 
   describe('getUser', () => {
-    it('should be called userRepository.findByOne once', async () => {
+    it('should be call the userRepository.findByOne method', async () => {
       await service.getUser(1);
       expect(userRepository.findOneBy).toHaveBeenCalled();
+    });
+
+    it('should call userRepository.findByOne with the correct parameters', async () => {
+      await service.getUser(1);
+      expect(userRepository.findOneBy).toHaveBeenCalledWith({ id: 1 });
     });
   });
 });

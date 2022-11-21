@@ -1,15 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
 import { UserController } from './user.controller';
 import { CreateUserDto } from './user.dto';
-import { User } from './user.entity';
 import { UserService } from './user.service';
 
 describe('UserController', () => {
   let controller: UserController;
   let service: UserService;
-
-  const USER_REPOSITORY_TOKEN = getRepositoryToken(User);
 
   beforeEach(async () => {
     const UserServiceProvider = {
@@ -17,25 +13,13 @@ describe('UserController', () => {
       useFactory: () => ({
         findAll: jest.fn(),
         getUser: jest.fn(),
-        createUser: jest.fn(() => []),
+        createUser: jest.fn(),
       }),
     };
 
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UserController],
-      providers: [
-        UserService,
-        UserServiceProvider,
-        {
-          provide: USER_REPOSITORY_TOKEN,
-          useValue: {
-            create: jest.fn(),
-            save: jest.fn(),
-            find: jest.fn(),
-            findOneBy: jest.fn(),
-          },
-        },
-      ],
+      providers: [UserServiceProvider],
     }).compile();
 
     controller = module.get<UserController>(UserController);
@@ -54,17 +38,20 @@ describe('UserController', () => {
   });
 
   describe('getUser', () => {
-    it('should return one users', async () => {
-      const result = { id: 1, username: 'Bill', isAdmin: true };
-      jest.spyOn(service, 'getUser').mockResolvedValue(result);
-      expect(await controller.getUser(1)).toBe(result);
+    it('should call service.getUser with the correct id parameter', async () => {
+      await controller.getUser(1);
+      expect(await service.getUser).toHaveBeenCalledWith(1);
     });
   });
 
   describe('createUser', () => {
-    it('should not equal null when createUser is called', async () => {
-      const dto = new CreateUserDto();
-      expect(controller.createUser(dto)).not.toEqual(null);
+    it('should call service.createUser with the correct parameters', async () => {
+      const body: CreateUserDto = {
+        username: 'Klay',
+        isAdmin: false,
+      };
+      await controller.createUser(body);
+      expect(await service.createUser).toHaveBeenCalledWith({ ...body });
     });
   });
 });

@@ -1,11 +1,10 @@
-// Entry point in the file. Uses NestFactory to create an instance.
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule { cors: true});
+  const app = await NestFactory.create(AppModule, { cors: true });
   const config: ConfigService = app.get(ConfigService);
   const port: number = config.get<number>('PORT');
 

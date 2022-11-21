@@ -21,5 +21,4 @@ export class UserService {
     const newUser = this.userRepository.create({ ...body });
     return this.userRepository.save(newUser);
   }
-
 }
