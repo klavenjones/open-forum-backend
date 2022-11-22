@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UserController } from './user.controller';
 import { CreateUserDto } from './user.dto';
 import { UserService } from './user.service';
+import * as request from 'supertest';
 
 describe('UserController', () => {
   let controller: UserController;
