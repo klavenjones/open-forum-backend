@@ -72,7 +72,6 @@ describe('Users API Testing (e2e)', () => {
     });
 
     it('should return a Bad Request 400 error when a user sends an empty object', () => {
-      const badRequest = { isAdmin: true };
       return request(app.getHttpServer())
         .post('/users')
         .send({})

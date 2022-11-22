@@ -1,7 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-// import { TestDatabaseModule } from 'src/typeorm/typeorm.test.module';
-import * as request from 'supertest';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { UserService } from './user.service';
