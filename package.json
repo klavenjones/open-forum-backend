@@ -82,10 +82,7 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node",
-    "setupFiles": [
-      "../.jest/setEnvVars.ts"
-    ]
+    "testEnvironment": "node"
   },
   "config": {
     "commitizen": {

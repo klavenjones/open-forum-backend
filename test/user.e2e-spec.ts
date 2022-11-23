@@ -29,13 +29,12 @@ describe('Users API Testing (e2e)', () => {
           imports: [ConfigModule],
           useFactory: (config: ConfigService) => ({
             type: 'postgres',
-            host: config.get('DATABASE_HOST'),
-            port: config.get('DATABASE_PORT'),
-            username: config.get('DATABASE_USER'),
-            password: '',
-            database: process.env.TEST_DATABASE_NAME,
-            entities: [User],
+            host: 'localhost',
+            port: 5432,
+            database: 'open_forum_test_db',
+            autoLoadEntities: true,
             synchronize: true,
+            dropSchema: true,
           }),
           inject: [ConfigService],
         }),
@@ -121,8 +120,6 @@ describe('Users API Testing (e2e)', () => {
   });
 
   afterAll(async () => {
-    //Delete from Test Database when tests are finished
-    await userRepository.query(`DELETE FROM users;`);
     await app.close();
   });
 });
