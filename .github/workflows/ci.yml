@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         node: [18.x]
-    
+
     steps:
       
       - name: Copy repository

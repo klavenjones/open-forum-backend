@@ -1,6 +1,7 @@
+
 # Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+A backend Server API for the Open Forum Application built with [Nest](https://github.com/nestjs/nest)
 
 # Installations
 
@@ -63,6 +64,7 @@ npm i
 ---
 
 
+
 # Environment Set Up
 
 
@@ -113,6 +115,7 @@ Support coming soon.
 
 For local development, You can duplicate .env.example located file and rename it to .development.env or .env
 
+
 ```bash
 
 # src/common/.env.example
@@ -129,6 +132,7 @@ DATABASE_PORT=<Your DB Port>
 ```
 
 ---
+
 
 # Running the app
 
@@ -195,5 +199,4 @@ To check for any prettier violations run:
 ```bash
 npm run prettier:check
 ```
-
 
