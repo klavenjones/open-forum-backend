@@ -1,32 +1,38 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
+# Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
+# Installations
+
+## Install PostgreSQL 
+
+*Version 14.3 was used when building this project*
+
+An easy way to install various PostgreSQL version is to install [Postgres.app](https://postgresapp.com/).
+
+
+If you prefer to install it using Hombrew run this command
+
+```sh
+brew install postgresql
+```
+
+Check to see if postgres installed successfully by running either of these commands.
+
+```sh
+
+postgres -V 
+```
+
+or
+
+```sh
+
+psql -V
+```
+
+
+## Install Project
 
 Clone the git repository
 
@@ -37,23 +43,94 @@ git clone https://github.com/klavenj/open-forum-backend.git
 Go into the project directory
 
 ```bash
+
 cd open-forum-backend/
 ```
 
 Checkout working branch
 
 ```bash
+
 git checkout -b <branch>
 ```
 
 Install NPM dependencies
 
 ```bash
+
 npm i
 ```
 ---
 
-## Running the app
+
+# Environment Set Up
+
+
+## Set up Database
+
+### Start Postgres (If not using the Postgres.app)
+
+```bash
+
+brew services start postgres
+```
+
+### Create Database
+
+
+In order to run the project locally with ``TypeORM`` requires an existing database. To create a database with Postgres. You can run this command to create a database.
+
+
+Run this command when you arent connected to postgres via Terminal:
+
+```bash
+
+createdb -U <username> <databasename>
+```
+
+*Usually the default username is the name you currently use to log into your laptop* 
+
+
+Run this command If connected to postgres via Terminal you can run an SQL Query
+
+```bash
+
+CREATE DATABASE <Databasename>
+```
+
+Here is a good guide for connecting to Postgres
+
+[Connect to Postgres Guide](https://www.prisma.io/dataguide/postgresql/connecting-to-postgresql-databases#basic-information-about-the-psql-client)
+
+
+
+### Migrations 
+
+Support coming soon.
+
+
+# Environment Variables
+
+For local development, You can duplicate .env.example located file and rename it to .development.env or .env
+
+```bash
+
+# src/common/.env.example
+
+PORT=3000
+BASE_URL=http://localhost:3000
+
+DATABASE_HOST=<Your db host>
+DATABASE_NAME=<Your db name>
+DATABASE_USER=<Your DB Username>
+DATABASE_PASSWORD=<Your DB Password>
+DATABASE_PORT=<Your DB Port>
+
+```
+
+---
+
+# Running the app
 
 ```bash
 # development
@@ -66,7 +143,7 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 ---
-## Test
+# Test
 
 ```bash
 # unit tests
@@ -81,7 +158,7 @@ $ npm run test:cov
 
 ---
 
-## Commitizen
+# Commitizen
 
 [commitizen](https://github.com/commitizen/cz-cli) is a command line utility that makes it easier to create commit messages following the [conventional commit format](https://conventionalcommits.org) specification.
 
@@ -95,7 +172,7 @@ Use `git cz` instead of `git commit` to use commitizen.
 
 ---
 
-## Linting & Formatting
+# Linting & Formatting
 
 
 To check the linting in your code run:
@@ -120,18 +197,3 @@ npm run prettier:check
 ```
 
 
-
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
