@@ -2,9 +2,9 @@
 
 A backend Server API for the Open Forum Application built with [Nest](https://github.com/nestjs/nest)
 
-# Installations
+## Installations
 
-## Install PostgreSQL
+### Install PostgreSQL
 
 _Version 14.3 was used when building this project_
 
@@ -30,7 +30,7 @@ or
 psql -V
 ```
 
-## Install Project
+### Install Project
 
 Clone the git repository
 
@@ -61,7 +61,7 @@ npm i
 
 ---
 
-# Environment Set Up
+## Environment Set Up
 
 ### Environment Variables
 
@@ -155,7 +155,7 @@ npm run typeorm
 
 For more information about TypeORM checkout the [docs](https://typeorm.io/)
 
-# Running the app
+## Running the app
 
 ```bash
 # development
@@ -170,7 +170,7 @@ $ npm run start:prod
 
 ---
 
-# Test
+## Test
 
 ```bash
 # unit tests
@@ -185,7 +185,7 @@ $ npm run test:cov
 
 ---
 
-# Commitizen
+## Commitizen
 
 [commitizen](https://github.com/commitizen/cz-cli) is a command line utility that makes it easier to create commit messages following the [conventional commit format](https://conventionalcommits.org) specification.
 
@@ -199,7 +199,7 @@ Use `git cz` instead of `git commit` to use commitizen.
 
 ---
 
-# Linting & Formatting
+## Linting & Formatting
 
 To check the linting in your code run:
 
