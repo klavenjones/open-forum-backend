@@ -20,7 +20,13 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prettier:check": "prettier --check ./**/*.{ts,js,json,*rc}",
-    "prettier:write": "prettier --write ./**/*.{ts,js,json,*rc}"
+    "prettier:write": "prettier --write ./**/*.{ts,js,json,*rc}",
+    "typeorm": "ts-node ./node_modules/typeorm/cli",
+    "typeorm:run-migrations": "npm run typeorm  migration:run -- -d ./src/typeorm/typeorm.config-migrations.ts",
+    "typeorm:revert-migrations": "npm run typeorm  migration:revert -- -d ./src/typeorm/typeorm.config-migrations.ts",
+    "typeorm:generate-migration": "npm run typeorm -- -d ./src/typeorm/typeorm.config-migrations.ts migration:generate ./src/database/migrations/$npm_config_name",
+    "typeorm:create-migration": "npm run typeorm -- migration:create ./src/database/migrations/$npm_config_name",
+    "typeorm:show-migration": " npm run typeorm migration:show -- -d ./src/typeorm/typeorm.config-migrations"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
