@@ -3,14 +3,14 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import { UserModule } from '../src/api/user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { User } from '../src/api/user/user.entity';
 import { CreateUserDto } from '../src/api/user/user.dto';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 describe('Users API Testing (e2e)', () => {
   let app: INestApplication;
-  let userRepository: Repository<User>;
   const createUser: CreateUserDto = { username: 'Klaven', isAdmin: false };
   const result = {
     id: expect.any(Number),
@@ -27,13 +27,15 @@ describe('Users API Testing (e2e)', () => {
         UserModule,
         TypeOrmModule.forRootAsync({
           imports: [ConfigModule],
-          useFactory: (config: ConfigService) => ({
+          useFactory: () => ({
             type: 'postgres',
-            host: 'localhost',
+            host: process.env.TEST_DATABASE_HOST,
+            username: process.env.TEST_DATABASE_USER,
             port: 5432,
-            database: 'open_forum_test_db',
-            autoLoadEntities: true,
+            database: 'postgres',
+            password: process.env.TEST_DATABASE_PASSWORD,
             synchronize: true,
+            autoLoadEntities: true,
             dropSchema: true,
           }),
           inject: [ConfigService],
@@ -44,7 +46,6 @@ describe('Users API Testing (e2e)', () => {
     app = moduleFixture.createNestApplication();
     app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
     await app.init();
-    userRepository = moduleFixture.get('UserRepository');
   });
 
   describe('Create a new user [POST /users]', () => {

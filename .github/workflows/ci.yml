@@ -2,22 +2,34 @@ name: CI
 
 on:
   push:
-    branches: [ "*" ]
+    branches: ['**']
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-  build:
+  container-job:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [18.x]
+    container: node:16.13
+
+    services:
+      postgres:
+        image: postgres
+
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
-      
       - name: Copy repository
         uses: actions/checkout@v2
-      
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -25,15 +37,28 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-   
+
       - name: ESLint
         run: npm run lint
-   
+
       - name: Prettier
         run: npm run prettier:check
-   
+
       - name: Test
         run: npm run test
-   
+
+      - name: Test E2E
+        run: npm run test:e2e
+        env:
+          # The hostname used to communicate with the PostgreSQL service container
+          TEST_DATABASE_HOST: postgres
+          # The default PostgreSQL port
+          TEST_DATABASE_PORT: 5432
+          # The username used in the PostgreSQL service container
+          TEST_DATABASE_USER: postgres
+          # The database name in the PostgreSQL service container
+          TEST_DATABASE_NAME: postgres
+          # The database name in the PostgreSQL service container
+          TEST_DATABASE_PASSWORD: postgres
       - name: Build
         run: npm run build
