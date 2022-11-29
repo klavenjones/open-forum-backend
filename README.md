@@ -1,16 +1,14 @@
-
 # Description
 
 A backend Server API for the Open Forum Application built with [Nest](https://github.com/nestjs/nest)
 
 # Installations
 
-## Install PostgreSQL 
+## Install PostgreSQL
 
-*Version 14.3 was used when building this project*
+_Version 14.3 was used when building this project_
 
 An easy way to install various PostgreSQL version is to install [Postgres.app](https://postgresapp.com/).
-
 
 If you prefer to install it using Hombrew run this command
 
@@ -22,7 +20,7 @@ Check to see if postgres installed successfully by running either of these comma
 
 ```sh
 
-postgres -V 
+postgres -V
 ```
 
 or
@@ -31,7 +29,6 @@ or
 
 psql -V
 ```
-
 
 ## Install Project
 
@@ -61,60 +58,14 @@ Install NPM dependencies
 
 npm i
 ```
+
 ---
-
-
 
 # Environment Set Up
 
+### Environment Variables
 
-## Set up Database
-
-### Start Postgres (If not using the Postgres.app)
-
-```bash
-
-brew services start postgres
-```
-
-### Create Database
-
-
-In order to run the project locally with ``TypeORM`` requires an existing database. To create a database with Postgres. You can run this command to create a database.
-
-
-Run this command when you arent connected to postgres via Terminal:
-
-```bash
-
-createdb -U <username> <databasename>
-```
-
-*Usually the default username is the name you currently use to log into your laptop* 
-
-
-Run this command If connected to postgres via Terminal you can run an SQL Query
-
-```bash
-
-CREATE DATABASE <Databasename>
-```
-
-Here is a good guide for connecting to Postgres
-
-[Connect to Postgres Guide](https://www.prisma.io/dataguide/postgresql/connecting-to-postgresql-databases#basic-information-about-the-psql-client)
-
-
-
-### Migrations 
-
-Support coming soon.
-
-
-# Environment Variables
-
-For local development, You can duplicate .env.example located file and rename it to .development.env or .env
-
+To run this application locally, the first step is to create a local .env file and set the environment variables with the appropriate values. You can duplicate .env.example file and rename it to .env
 
 ```bash
 
@@ -129,10 +80,80 @@ DATABASE_USER=<Your DB Username>
 DATABASE_PASSWORD=<Your DB Password>
 DATABASE_PORT=<Your DB Port>
 
+Created for testing local, and CI environments.
+TEST_DATABASE_HOST=
+TEST_DATABASE_USER=
+
 ```
 
 ---
 
+## Set up Database
+
+### Create Database
+
+In order to use `TypeORM`, it requires the database to be initialized before you can connect to it. You can run this command to setup your database
+
+Run this command:
+
+```bash
+
+npm run db:setup
+```
+
+First this will run the `database/setup.ts` file, which drops the database if it exists and creates a new one. Then it runs the latest migration to populate the database.
+
+### Migrations
+
+Run Migrations
+
+```bash
+
+npm run typeorm:run-migrations
+```
+
+Create Migration
+
+```bash
+
+npm run typeorm:create-migration --name=<Migration name>
+```
+
+Generate Migration
+
+```bash
+
+npm run typeorm:generate-migration --name=<Migration name>
+```
+
+**_Note_**: Custom --name option flag will only work using NPM. It will not work with yarn.
+
+Show Migrations
+
+```bash
+
+npm run typeorm:show-migrations
+```
+
+Revert Migration
+
+```bash
+
+npm run typeorm:revert-migrations
+```
+
+All of these commands leverage the TypeORM cli tool that comes installed with the TypeORM npm package.
+
+In order to run the cli, without installation, you can use:
+
+```bash
+
+npm run typeorm
+```
+
+**Note:** The migration commands leverage the typeorm/typeorm.config-migrations.ts file.
+
+For more information about TypeORM checkout the [docs](https://typeorm.io/)
 
 # Running the app
 
@@ -146,7 +167,9 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
+
 ---
+
 # Test
 
 ```bash
@@ -178,14 +201,11 @@ Use `git cz` instead of `git commit` to use commitizen.
 
 # Linting & Formatting
 
-
 To check the linting in your code run:
 
 ```bash
 npm run lint
 ```
-
-
 
 To format the code run:
 
@@ -193,10 +213,8 @@ To format the code run:
 npm run prettier:write
 ```
 
-
 To check for any prettier violations run:
 
 ```bash
 npm run prettier:check
 ```
-
