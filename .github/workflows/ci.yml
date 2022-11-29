@@ -69,5 +69,7 @@ jobs:
           TEST_DATABASE_USER: postgres
           # The database name in the PostgreSQL service container
           TEST_DATABASE_NAME: postgres
+          # The database name in the PostgreSQL service container
+          TEST_DATABASE_PASSWORD: postgres
       - name: Build
         run: npm run build
