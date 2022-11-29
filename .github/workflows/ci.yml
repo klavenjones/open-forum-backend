@@ -38,16 +38,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Connect to PostgreSQL
-        # Runs a script that creates a PostgreSQL table, populates
-        # the table with data, and then retrieves the data.
-        run: node client.js
-        # Environment variables used by the `client.js` script to create a new PostgreSQL table.
-        env:
-          # The hostname used to communicate with the PostgreSQL service container
-          TEST_POSTGRES_HOST: postgres
-          # The default PostgreSQL port
-          POSTGRES_PORT: 5432
+      # - name: Connect to PostgreSQL
+      #   # Runs a script that creates a PostgreSQL table, populates
+      #   # the table with data, and then retrieves the data.
+      #   run: node client.js
+      #   # Environment variables used by the `client.js` script to create a new PostgreSQL table.
+      #   env:
+      #     # The hostname used to communicate with the PostgreSQL service container
+      #     TEST_POSTGRES_HOST: postgres
+      #     # The default PostgreSQL port
+      #     POSTGRES_PORT: 5432
 
       - name: ESLint
         run: npm run lint
