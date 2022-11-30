@@ -74,10 +74,10 @@ To run this application locally, the first step is to create a local .env file a
 PORT=3000
 BASE_URL=http://localhost:3000
 
-DATABASE_HOST=<Your db host>
-DATABASE_NAME=<Your db name>
-DATABASE_USER=<Your DB Username>
-DATABASE_PASSWORD=<Your DB Password>
+DATABASE_HOST=<Your database host>
+DATABASE_NAME=<Database name, choose a name for the database of your local environment, this will be created automatically>
+DATABASE_USER=<Your Database username, choose a name for the database. A role will be created automatically based on what you add here>
+DATABASE_PASSWORD=<Your DB Password, choose a password, this is optional when creating a role for your local database>
 DATABASE_PORT=<Your DB Port>
 
 Created for testing local, and CI environments.
@@ -101,7 +101,7 @@ Run this command:
 npm run db:setup
 ```
 
-First this will run the `database/setup.ts` file, which drops the database if it exists and creates a new one. Then it runs the latest migration to populate the database.
+First this will run the `database/setup.ts` file, which will create a role for your local database, drops the database if it exists and creates a new one. Then it runs the latest migration to populate the database.
 
 ### Migrations
 
