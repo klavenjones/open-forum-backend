@@ -6,7 +6,7 @@ A backend Server API for the Open Forum Application built with [Nest](https://gi
 
 ### Install PostgreSQL
 
-_Version 14.3 was used when building this project_
+_For your information: Version 14.3 was used when building this project, it is not required._
 
 An easy way to install various PostgreSQL version is to install [Postgres.app](https://postgresapp.com/).
 
