@@ -75,7 +75,7 @@ PORT=3000
 BASE_URL=http://localhost:3000
 
 DATABASE_HOST=<Your database host>
-DATABASE_NAME=<Database name, choose a name for the database of your local environment, this will be created automatically>
+DATABASE_NAME=<Database name, choose a name for your local database environment, this will be created automatically>
 DATABASE_USER=<Your Database username, choose a name for the database. A role will be created automatically based on what you add here>
 DATABASE_PASSWORD=<Your DB Password, choose a password, this is optional when creating a role for your local database>
 DATABASE_PORT=<Your DB Port>
