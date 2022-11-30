@@ -80,10 +80,12 @@ DATABASE_USER=<Your Database username, choose a name for the database role. A ro
 DATABASE_PASSWORD=<Your Database Password, choose a password, this is optional when creating a role for your local database>
 DATABASE_PORT=<Your Database Port>
 
-Created for testing local, and CI environments. Locally, you can add the same values as above. But these values will be different when running tests in the github actions workflow.
+Created for local testing, and CI environments. Locally, you can add the same values as above. But these values will be different when running tests in the github actions workflow.
 
+TEST_DATABASE_NAME=
 TEST_DATABASE_HOST=
 TEST_DATABASE_USER=
+TEST_DATABASE_PORT=
 TEST_DATABASE_PASSWORD=
 
 ```
