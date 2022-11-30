@@ -30,6 +30,8 @@ or
 psql -V
 ```
 
+For even more information on installing postgres, you can look here: [Postgres Download](https://www.postgresql.org/download/)
+
 ### Install Project
 
 Clone the git repository
