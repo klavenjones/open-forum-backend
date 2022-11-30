@@ -32,7 +32,7 @@ describe('Users API Testing (e2e)', () => {
             host: process.env.TEST_DATABASE_HOST,
             username: process.env.TEST_DATABASE_USER,
             port: 5432,
-            database: 'postgres',
+            database: process.env.TEST_DATABASE_NAME,
             password: process.env.TEST_DATABASE_PASSWORD,
             synchronize: true,
             autoLoadEntities: true,
