@@ -39,7 +39,7 @@ jobs:
         run: npm ci
 
       - name: ESLint
-        run: npm run lint
+        run:  npm run lint
 
       - name: Prettier
         run: npm run prettier:check
@@ -58,7 +58,7 @@ jobs:
           TEST_DATABASE_USER: postgres
           # The database name in the PostgreSQL service container
           TEST_DATABASE_NAME: postgres
-          # The database name in the PostgreSQL service container
+          # The database password in the PostgreSQL service container
           TEST_DATABASE_PASSWORD: postgres
       - name: Build
         run: npm run build

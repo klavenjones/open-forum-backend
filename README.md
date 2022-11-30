@@ -1,16 +1,14 @@
-
 # Description
 
 A backend Server API for the Open Forum Application built with [Nest](https://github.com/nestjs/nest)
 
-# Installations
+## Installations
 
-## Install PostgreSQL 
+### Install PostgreSQL
 
-*Version 14.3 was used when building this project*
+_Version 14.3 was used when building this project_
 
 An easy way to install various PostgreSQL version is to install [Postgres.app](https://postgresapp.com/).
-
 
 If you prefer to install it using Hombrew run this command
 
@@ -22,7 +20,7 @@ Check to see if postgres installed successfully by running either of these comma
 
 ```sh
 
-postgres -V 
+postgres -V
 ```
 
 or
@@ -32,8 +30,7 @@ or
 psql -V
 ```
 
-
-## Install Project
+### Install Project
 
 Clone the git repository
 
@@ -61,60 +58,14 @@ Install NPM dependencies
 
 npm i
 ```
+
 ---
 
+## Environment Set Up
 
+### Environment Variables
 
-# Environment Set Up
-
-
-## Set up Database
-
-### Start Postgres (If not using the Postgres.app)
-
-```bash
-
-brew services start postgres
-```
-
-### Create Database
-
-
-In order to run the project locally with ``TypeORM`` requires an existing database. To create a database with Postgres. You can run this command to create a database.
-
-
-Run this command when you arent connected to postgres via Terminal:
-
-```bash
-
-createdb -U <username> <databasename>
-```
-
-*Usually the default username is the name you currently use to log into your laptop* 
-
-
-Run this command If connected to postgres via Terminal you can run an SQL Query
-
-```bash
-
-CREATE DATABASE <Databasename>
-```
-
-Here is a good guide for connecting to Postgres
-
-[Connect to Postgres Guide](https://www.prisma.io/dataguide/postgresql/connecting-to-postgresql-databases#basic-information-about-the-psql-client)
-
-
-
-### Migrations 
-
-Support coming soon.
-
-
-# Environment Variables
-
-For local development, You can duplicate .env.example located file and rename it to .development.env or .env
-
+To run this application locally, the first step is to create a local .env file and set the environment variables with the appropriate values. You can duplicate .env.example file and rename it to .env
 
 ```bash
 
@@ -123,18 +74,90 @@ For local development, You can duplicate .env.example located file and rename it
 PORT=3000
 BASE_URL=http://localhost:3000
 
-DATABASE_HOST=<Your db host>
-DATABASE_NAME=<Your db name>
-DATABASE_USER=<Your DB Username>
-DATABASE_PASSWORD=<Your DB Password>
-DATABASE_PORT=<Your DB Port>
+DATABASE_HOST=<Your Database host>
+DATABASE_NAME=<Database name, choose a name for your local database environment, this will be created automatically, when running the db:setup command>
+DATABASE_USER=<Your Database username, choose a name for the database role. A role will be created automatically based on what you add here>
+DATABASE_PASSWORD=<Your Database Password, choose a password, this is optional when creating a role for your local database>
+DATABASE_PORT=<Your Database Port>
+
+Created for testing local, and CI environments. Locally, you can add the same values as above. But these values will be different when running tests in the github actions workflow.
+
+TEST_DATABASE_HOST=
+TEST_DATABASE_USER=
+TEST_DATABASE_PASSWORD=
 
 ```
 
 ---
 
+## Set up Database
 
-# Running the app
+### Create Database
+
+In order to use `TypeORM`, it requires the database to be initialized before you can connect to it. You can run this command to setup your database
+
+Run this command:
+
+```bash
+
+npm run db:setup
+```
+
+First this will run the `database/setup.ts` file, which will create a role for your local database, drops the database if it exists and creates a new one. Then it runs the latest migration to populate the database.
+
+### Migrations
+
+Run Migrations
+
+```bash
+
+npm run typeorm:run-migrations
+```
+
+Create Migration
+
+```bash
+
+npm run typeorm:create-migration --name=<Migration name>
+```
+
+Generate Migration
+
+```bash
+
+npm run typeorm:generate-migration --name=<Migration name>
+```
+
+**_Note_**: Custom --name option flag will only work using NPM. It will not work with yarn.
+
+Show Migrations
+
+```bash
+
+npm run typeorm:show-migrations
+```
+
+Revert Migration
+
+```bash
+
+npm run typeorm:revert-migrations
+```
+
+All of these commands leverage the TypeORM cli tool that comes installed with the TypeORM npm package.
+
+In order to run the cli, without installation, you can use:
+
+```bash
+
+npm run typeorm
+```
+
+**Note:** The migration commands leverage the typeorm/typeorm.config-migrations.ts file.
+
+For more information about TypeORM checkout the [docs](https://typeorm.io/)
+
+## Running the app
 
 ```bash
 # development
@@ -146,8 +169,10 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
+
 ---
-# Test
+
+## Test
 
 ```bash
 # unit tests
@@ -162,7 +187,7 @@ $ npm run test:cov
 
 ---
 
-# Commitizen
+## Commitizen
 
 [commitizen](https://github.com/commitizen/cz-cli) is a command line utility that makes it easier to create commit messages following the [conventional commit format](https://conventionalcommits.org) specification.
 
@@ -176,8 +201,7 @@ Use `git cz` instead of `git commit` to use commitizen.
 
 ---
 
-# Linting & Formatting
-
+## Linting & Formatting
 
 To check the linting in your code run:
 
@@ -185,18 +209,14 @@ To check the linting in your code run:
 npm run lint
 ```
 
-
-
 To format the code run:
 
 ```bash
 npm run prettier:write
 ```
 
-
 To check for any prettier violations run:
 
 ```bash
 npm run prettier:check
 ```
-
