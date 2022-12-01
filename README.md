@@ -37,7 +37,7 @@ For even more information on installing postgres, you can look here: [Postgres D
 Clone the git repository
 
 ```bash
-git clone https://github.com/klavenj/open-forum-backend.git
+git clone https://github.com/klavenjones/open-forum-backend.git
 ```
 
 Go into the project directory
