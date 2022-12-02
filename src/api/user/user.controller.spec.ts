@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserController } from './user.controller';
-import { CreateUserDto } from './user.dto';
+import { UserDto } from './dto/user.dto';
 import { UserService } from './user.service';
 
 describe('UserController', () => {
@@ -46,9 +46,10 @@ describe('UserController', () => {
 
   describe('createUser', () => {
     it('should call service.createUser with the correct parameters', async () => {
-      const body: CreateUserDto = {
+      const body: UserDto = {
         username: 'Klay',
         isAdmin: false,
+        password: 'tester',
       };
       await controller.createUser(body);
       expect(await service.createUser).toHaveBeenCalledWith({ ...body });
