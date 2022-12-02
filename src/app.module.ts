@@ -4,6 +4,7 @@ import { getEnvPath } from './common/helpers/env.helper';
 import { ApiModule } from './api/api.module';
 import { DatabaseModule } from './typeorm/typeorm.module';
 
+
 const envFilePath: string = getEnvPath(`${__dirname}/common/envs`);
 
 @Module({
