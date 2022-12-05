@@ -10,7 +10,4 @@ export class UserDto {
   @IsNotEmpty()
   @MaxLength(60)
   public password;
-
-  @IsBoolean()
-  public isAdmin: boolean;
 }

@@ -46,7 +46,6 @@ describe('RegisterController', () => {
     it('calls service.register() method', async () => {
       const body: RegisterUserDto = {
         username: 'Klay',
-        isAdmin: false,
         password: 'tester',
       };
 

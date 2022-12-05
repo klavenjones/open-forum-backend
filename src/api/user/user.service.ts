@@ -18,7 +18,7 @@ export class UserService {
   }
 
   public createUser(body: UserDto): Promise<User> {
-    const newUser = this.userRepository.create({ ...body });
+    const newUser = this.userRepository.create({ ...body, isAdmin: false });
     return this.userRepository.save(newUser);
   }
 }

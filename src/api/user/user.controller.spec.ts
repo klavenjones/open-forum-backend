@@ -48,7 +48,6 @@ describe('UserController', () => {
     it('should call service.createUser with the correct parameters', async () => {
       const body: UserDto = {
         username: 'Klay',
-        isAdmin: false,
         password: 'tester',
       };
       await controller.createUser(body);

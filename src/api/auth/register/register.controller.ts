@@ -11,7 +11,7 @@ export class RegisterController {
     try {
       await this.registerService.register(registerUserDto);
       return res.status(HttpStatus.OK).json({
-        message: 'User registration successfully!',
+        message: `Hey ${registerUserDto.username} your registration was successful!`,
         status: 200,
       });
     } catch (err) {

@@ -3,15 +3,15 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import { UserModule } from '../src/api/user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserDto } from '../src/api/user/dto/user.dto';
+import { RegisterUserDto } from '../src/api/auth/register/dto/register-user.dto';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-describe('Users API Testing (e2e)', () => {
+describe('Register user API Testing (e2e)', () => {
   let app: INestApplication;
-  const createUser: UserDto = { username: 'Klaven', password: 'tester' };
+  const registerUser: RegisterUserDto = { username: 'Klaven', password: 'tester' };
   const result = {
     id: expect.any(Number),
     username: 'Klaven',
@@ -49,21 +49,36 @@ describe('Users API Testing (e2e)', () => {
     await app.init();
   });
 
-  describe('Create a new user [POST /users]', () => {
+  describe('Create a new user [POST /auth/register]', () => {
     it('should return a Bad Request 400 error when a user forgets to send username in the request', () => {
       const badRequest = { password: 'tester' };
       return request(app.getHttpServer())
-        .post('/users')
+        .post('/auth/register')
         .send(badRequest)
         .expect(400)
         .then(({ body }) => {
-          expect(body.message[1]).toEqual('username should not be empty');
+          expect(body.message.includes('username must be shorter than or equal to 120 characters')).toBe(true);
+          expect(body.message.includes('username should not be empty')).toBe(true);
+          expect(body.message.includes('username must be a string')).toBe(true);
+        });
+    });
+
+    it('should return a Bad Request 400 error when a user forgets to send password in the request', () => {
+      const badRequest = { username: 'klaven' };
+      return request(app.getHttpServer())
+        .post('/auth/register')
+        .send(badRequest)
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.message.includes('password must be shorter than or equal to 60 characters')).toBe(true);
+          expect(body.message.includes('password should not be empty')).toBe(true);
+          expect(body.message.includes('password must be a string')).toBe(true);
         });
     });
 
     it('should return a Bad Request 400 error when a user sends an empty object', () => {
       return request(app.getHttpServer())
-        .post('/users')
+        .post('/auth/register')
         .send({})
         .expect(400)
         .then(({ body }) => {
@@ -76,40 +91,14 @@ describe('Users API Testing (e2e)', () => {
         });
     });
 
-    it('should create a new user and return the user created', () => {
+    it('should create a new user and send a success message', () => {
       return request(app.getHttpServer())
-        .post('/users')
-        .send(createUser)
+        .post('/auth/register')
+        .send(registerUser)
         .expect(201)
         .then(({ body }) => {
-          expect(body).toEqual({ ...result });
+          expect(body.message).toEqual('Hey Klaven your registration was successful!');
         });
-    });
-  });
-
-  describe('Get all users [GET /users]', () => {
-    it('should return an array of users', async () => {
-      const { body } = await request
-        .agent(app.getHttpServer())
-        .get('/users')
-        .set('Accept', 'application/json')
-        .expect('Content-Type', /json/)
-        .expect(200);
-
-      expect(body).toEqual([{ ...result }]);
-    });
-  });
-
-  describe('Get one user [GET /user/:id]', () => {
-    it('should return a single user', async () => {
-      const { body } = await request
-        .agent(app.getHttpServer())
-        .get(`/users`)
-        .query({ id: 1 })
-        .set('Accept', 'application/json')
-        .expect(200);
-
-      expect(body).toEqual([{ ...result }]);
     });
   });
 
