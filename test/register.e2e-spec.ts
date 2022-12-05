@@ -1,33 +1,24 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
-import { UserModule } from '../src/api/user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RegisterUserDto } from '../src/api/auth/register/dto/register-user.dto';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as dotenv from 'dotenv';
+import { RegisterModule } from '../src/api/auth/register/register.module';
+import { UserModule } from '../src/api/user/user.module';
 
 dotenv.config();
 
 describe('Register user API Testing (e2e)', () => {
   let app: INestApplication;
   const registerUser: RegisterUserDto = { username: 'Klaven', password: 'tester' };
-  const result = {
-    id: expect.any(Number),
-    username: 'Klaven',
-    password: expect.any(String),
-    isAdmin: false,
-    createdAt: expect.any(String),
-    updatedAt: expect.any(String),
-    deletedAt: null,
-  };
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
         UserModule,
+        RegisterModule,
         TypeOrmModule.forRootAsync({
-          imports: [ConfigModule],
           useFactory: () => ({
             type: 'postgres',
             host: process.env.TEST_DATABASE_HOST,
@@ -39,7 +30,6 @@ describe('Register user API Testing (e2e)', () => {
             autoLoadEntities: true,
             dropSchema: true,
           }),
-          inject: [ConfigService],
         }),
       ],
     }).compile();

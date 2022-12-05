@@ -8,7 +8,6 @@ import { createMock } from '@golevelup/ts-jest';
 describe('RegisterController', () => {
   let controller: RegisterController;
   let registerService: RegisterService;
-  let userService: UserService;
 
   beforeEach(async () => {
     const RegisterServiceProvider = {

@@ -4,7 +4,6 @@ import * as request from 'supertest';
 import { UserModule } from '../src/api/user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserDto } from '../src/api/user/dto/user.dto';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -27,7 +26,6 @@ describe('Users API Testing (e2e)', () => {
       imports: [
         UserModule,
         TypeOrmModule.forRootAsync({
-          imports: [ConfigModule],
           useFactory: () => ({
             type: 'postgres',
             host: process.env.TEST_DATABASE_HOST,
@@ -39,7 +37,6 @@ describe('Users API Testing (e2e)', () => {
             autoLoadEntities: true,
             dropSchema: true,
           }),
-          inject: [ConfigService],
         }),
       ],
     }).compile();
