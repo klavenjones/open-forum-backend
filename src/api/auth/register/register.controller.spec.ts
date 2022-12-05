@@ -1,4 +1,3 @@
-import { HttpStatus } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from '../../user/user.service';
 import { RegisterUserDto } from './dto/register-user.dto';
@@ -35,7 +34,6 @@ describe('RegisterController', () => {
 
     controller = module.get<RegisterController>(RegisterController);
     registerService = module.get<RegisterService>(RegisterService);
-    userService = module.get<UserService>(UserService);
   });
 
   it('should be defined', () => {
