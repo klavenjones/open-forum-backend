@@ -40,7 +40,7 @@ describe('Register user API Testing (e2e)', () => {
   });
 
   describe('Create a new user [POST /auth/register]', () => {
-    it('should return a Bad Request 400 error when a user forgets to send username in the request', () => {
+    it('should return a Bad Request 400 error and array of error messages when a user forgets to send username in the request', () => {
       const badRequest = { password: 'tester' };
       return request(app.getHttpServer())
         .post('/auth/register')
@@ -53,7 +53,7 @@ describe('Register user API Testing (e2e)', () => {
         });
     });
 
-    it('should return a Bad Request 400 error when a user forgets to send password in the request', () => {
+    it('should return a Bad Request 400 error and array of error messages when a user forgets to send username in the request when a user forgets to send password in the request', () => {
       const badRequest = { username: 'klaven' };
       return request(app.getHttpServer())
         .post('/auth/register')
@@ -66,7 +66,7 @@ describe('Register user API Testing (e2e)', () => {
         });
     });
 
-    it('should return a Bad Request 400 error when a user sends an empty object', () => {
+    it('should return a Bad Request 400 error and array of error messages when a user forgets to send username in the request when a user sends an empty object', () => {
       return request(app.getHttpServer())
         .post('/auth/register')
         .send({})
@@ -88,6 +88,7 @@ describe('Register user API Testing (e2e)', () => {
         .expect(201)
         .then(({ body }) => {
           expect(body.message).toEqual('Hey Klaven your registration was successful!');
+          expect(body.status).toEqual(201);
         });
     });
   });

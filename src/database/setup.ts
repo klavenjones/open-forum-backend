@@ -5,9 +5,9 @@ dotenv.config();
 
 //Initial Database connection. Default Database configuration, this will allow you to connect and create tables.
 const pgclient = new Client({
-  host: 'localhost',
+  host: process.env.DATABASE_HOST,
   port: 5432,
-  password: 'postgres',
+  password: process.env.DATABASE_PASSWORD,
   database: 'postgres',
 });
 
@@ -24,15 +24,15 @@ const dbQuery = (query: string, successMessage: string, exitScript = false) => {
   });
 };
 
-//Creating a role for the user.
-const createRole = `CREATE ROLE ${process.env.DATABASE_USER} LOGIN CREATEDB`;
-dbQuery(createRole, `CREATED ROLE NAMED ${process.env.DATABASE_USER} SUCCESFULLY`);
+// //Creating a role for the user.
+// const createRole = `CREATE ROLE ${process.env.DATABASE_USER} LOGIN CREATEDB`;
+// dbQuery(createRole, `CREATED ROLE NAMED ${process.env.DATABASE_USER} SUCCESFULLY`);
 
-//Add password to role if provided
-if (process.env.DATABASE_PASSWORD) {
-  const addPassword = `ALTER ROLE ${process.env.DATABASE_USER} with PASSWORD ${process.env.DATABASE_PASSWORD}`;
-  dbQuery(addPassword, 'PASSWORD ADDED TO ROLE SUCCESSFULLY');
-}
+// //Add password to role if provided
+// if (process.env.DATABASE_PASSWORD) {
+//   const addPassword = `ALTER ROLE ${process.env.DATABASE_USER} with PASSWORD ${process.env.DATABASE_PASSWORD}`;
+//   dbQuery(addPassword, 'PASSWORD ADDED TO ROLE SUCCESSFULLY');
+// }
 
 //Create Development Databases
 const dropDatabaseIfExists = `DROP DATABASE IF EXISTS ${process.env.DATABASE_NAME}`;
