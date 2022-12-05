@@ -4,6 +4,7 @@ import { User } from '../../user/user.entity';
 import { UserService } from '../../user/user.service';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { RegisterService } from './register.service';
+import * as bcrypt from 'bcrypt';
 
 describe('RegisterService', () => {
   let registerService: RegisterService;
@@ -31,7 +32,7 @@ describe('RegisterService', () => {
         {
           provide: getRepositoryToken(User),
           useValue: {
-            createUser: jest.fn(),
+            create: jest.fn(),
             save: jest.fn(),
             find: jest.fn(),
             findOneBy: jest.fn(),
@@ -46,7 +47,7 @@ describe('RegisterService', () => {
 
   describe('register', () => {
     it('should call userService.createUser atleast once.', async () => {
-      jest.spyOn(userService, 'createUser').mockReturnValueOnce(
+      jest.spyOn(userService, 'createUser').mockResolvedValue(
         new Promise<User>(resolve => {
           resolve(testUser);
         })
@@ -54,6 +55,28 @@ describe('RegisterService', () => {
 
       await registerService.register({ ...testRegistered });
       expect(userService.createUser).toHaveBeenCalled();
+    });
+    it('should return the correct user.', async () => {
+      jest.spyOn(userService, 'createUser').mockResolvedValue(
+        new Promise<User>(resolve => {
+          resolve({ ...testUser, password: bcrypt.hashSync(testUser.password, 8) });
+        })
+      );
+
+      const user = await registerService.register({ ...testRegistered });
+      expect(user.username).toBe('TESTUSER');
+      expect(user.isAdmin).toBe(false);
+    });
+    it('should return the correct user with hashed password.', async () => {
+      jest.spyOn(userService, 'createUser').mockResolvedValue(
+        new Promise<User>(resolve => {
+          resolve({ ...testUser, password: bcrypt.hashSync(testUser.password, 8) });
+        })
+      );
+
+      const user = await registerService.register({ ...testRegistered });
+      expect(bcrypt.compareSync(testUser.password, user.password)).toBe(true);
+      expect(bcrypt.compareSync('AnotherPassword', user.password)).toBe(false);
     });
   });
 });

@@ -15,9 +15,9 @@ export class RegisterController {
         status: 201,
       });
     } catch (err) {
-      return res.status(HttpStatus.BAD_REQUEST).json({
-        message: 'Error: User not registred!',
-        status: 400,
+      return res.status(err.status).json({
+        message: err.message,
+        status: err.status,
       });
     }
   }
