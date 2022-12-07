@@ -16,7 +16,7 @@ If you prefer to install it using Hombrew run this command
 brew install postgresql
 ```
 
-Check to see if postgres installed successfully by running either of these commands.
+Check if postgres is installed successfully by running either of these commands.
 
 ```sh
 
@@ -30,7 +30,19 @@ or
 psql -V
 ```
 
-For even more information on installing postgres, you can look here: [Postgres Download](https://www.postgresql.org/download/)
+Here are other helpful articles you can check out when installing and connecting to Postgres:
+
+1. [MacOS installation](https://tecadmin.net/install-postgresql-on-macos/)
+2. [Windows installation](https://commandprompt.com/education/how-to-download-and-install-postgresql/)
+3. [Linux](https://www.digitalocean.com/community/tutorials/how-to-install-postgresql-on-ubuntu-22-04-quickstart)
+
+For more information on installing postgres, you can look here: [Postgres Download](https://www.postgresql.org/download/)
+
+After connecting to postgres from the command line/terminal here is the command to list the current users in your system.
+
+```sh
+postgres=#\du
+```
 
 ### Install Project
 
@@ -67,20 +79,21 @@ npm i
 
 ### Environment Variables
 
-To run this application locally, the first step is to create a local .env file and set the environment variables with the appropriate values. You can duplicate .env.example file and rename it to .env
+To run this application locally, the first step is to create a local .env file in the root of the project and set the environment variables with the appropriate values. You can duplicate .env.example file and rename it to .env
+
+_Please note, in order run this project with your local database, you need an existing postgres username, and password. Some machines will have a superuser by default, when installed, but there may be cases where you need to create a role for postgres_.
 
 ```bash
 
 # src/common/.env.example
 
-PORT=3000
 BASE_URL=http://localhost:3000
 
-DATABASE_HOST=<Your Database host>
-DATABASE_NAME=<Database name, choose a name for your local database environment, this will be created automatically, when running the db:setup command>
-DATABASE_USER=<Your Database username, choose a name for the database role. A role will be created automatically based on what you add here>
-DATABASE_PASSWORD=<Your Database Password, choose a password, this is optional when creating a role for your local database>
-DATABASE_PORT=<Your Database Port>
+DATABASE_HOST=<Your Database hostname>
+DATABASE_NAME=<Database name - This will be the name of the database you will work with in this environment>
+DATABASE_USER=<Your Database username - Must be created in Postgres already, this can be a default role, or a role you have created>
+DATABASE_PASSWORD=<Must be created in Postgres already, if the Postgres role you selected has a password, you must add it here.>
+DATABASE_PORT=<Your Database Port - Default Port for postgres is 5432>
 
 
 Created for local testing, and CI environments. Locally, you can add the same values as above. But these values will be different when running tests in the github actions workflow.
@@ -108,7 +121,7 @@ Run this command:
 npm run db:setup
 ```
 
-First this will run the `database/setup.ts` file, which will create a role for your local database, drops the database if it exists and creates a new one. Then it runs the latest migration to populate the database.
+First this will run the `database/setup.ts` file, which will drop the database if it exists and create a new one. Then it runs the latest migration to populate the database.
 
 ### Migrations
 
