@@ -89,7 +89,7 @@ _Please note, in order run this project with your local database, you need an ex
 
 BASE_URL=http://localhost:3000
 
-DATABASE_HOST=<Your Database hostname>
+DATABASE_HOST=<This should be the database Hostname, for example, this would be set to localhost, when running this locally>
 DATABASE_NAME=<Database name - This will be the name of the database you will work with in this environment>
 DATABASE_USER=<Your Database username - Must be created in Postgres already, this can be a default role, or a role you have created>
 DATABASE_PASSWORD=<Must be created in Postgres already, if the Postgres role you selected has a password, you must add it here.>
