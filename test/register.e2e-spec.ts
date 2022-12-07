@@ -11,7 +11,7 @@ dotenv.config();
 
 describe('Register user API Testing (e2e)', () => {
   let app: INestApplication;
-  const registerUser: RegisterUserDto = { username: 'Klaven', password: 'tester' };
+  const registerUser: RegisterUserDto = { username: 'KlavenJ', password: 'tester12' };
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -47,8 +47,8 @@ describe('Register user API Testing (e2e)', () => {
         .send(badRequest)
         .expect(400)
         .then(({ body }) => {
-          expect(body.message.includes('username must be shorter than or equal to 120 characters')).toBe(true);
-          expect(body.message.includes('username should not be empty')).toBe(true);
+          expect(body.message.includes('username must be longer than or equal to 6 characters')).toBe(true);
+          expect(body.message.includes('username must be shorter than or equal to 30 characters')).toBe(true);
           expect(body.message.includes('username must be a string')).toBe(true);
         });
     });
@@ -60,8 +60,8 @@ describe('Register user API Testing (e2e)', () => {
         .send(badRequest)
         .expect(400)
         .then(({ body }) => {
-          expect(body.message.includes('password must be shorter than or equal to 60 characters')).toBe(true);
-          expect(body.message.includes('password should not be empty')).toBe(true);
+          expect(body.message.includes('password must be longer than or equal to 8 characters')).toBe(true);
+          expect(body.message.includes('password must be shorter than or equal to 64 characters')).toBe(true);
           expect(body.message.includes('password must be a string')).toBe(true);
         });
     });
@@ -72,10 +72,12 @@ describe('Register user API Testing (e2e)', () => {
         .send({})
         .expect(400)
         .then(({ body }) => {
-          expect(body.message.includes('username must be shorter than or equal to 120 characters')).toBe(true);
+          expect(body.message.includes('username must be longer than or equal to 6 characters')).toBe(true);
+          expect(body.message.includes('username must be shorter than or equal to 30 characters')).toBe(true);
           expect(body.message.includes('username should not be empty')).toBe(true);
           expect(body.message.includes('username must be a string')).toBe(true);
-          expect(body.message.includes('password must be shorter than or equal to 60 characters')).toBe(true);
+          expect(body.message.includes('password must be longer than or equal to 8 characters')).toBe(true);
+          expect(body.message.includes('password must be shorter than or equal to 64 characters')).toBe(true);
           expect(body.message.includes('password should not be empty')).toBe(true);
           expect(body.message.includes('password must be a string')).toBe(true);
         });
@@ -87,7 +89,7 @@ describe('Register user API Testing (e2e)', () => {
         .send(registerUser)
         .expect(201)
         .then(({ body }) => {
-          expect(body.message).toEqual('Hey Klaven your registration was successful!');
+          expect(body.message).toEqual('Hey KlavenJ your registration was successful!');
           expect(body.status).toEqual(201);
         });
     });
