@@ -10,6 +10,7 @@ describe('UserService', () => {
 
   const testUser = {
     username: 'TESTUSER',
+    password: 'testing123',
     isAdmin: false,
     createdAt: new Date(Date.now()),
     updatedAt: new Date(Date.now()),
