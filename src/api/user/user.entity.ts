@@ -8,6 +8,9 @@ export class User {
   @Column({ type: 'varchar', length: 120 })
   public username: string;
 
+  @Column({ type: 'varchar', length: 60 })
+  public password: string;
+
   @Column({ type: 'boolean', default: false })
   public isAdmin: boolean;
 
