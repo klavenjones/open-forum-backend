@@ -1,4 +1,3 @@
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModuleAsyncOptions, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { DataSourceOptions } from 'typeorm';
 import * as dotenv from 'dotenv';
@@ -6,8 +5,6 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
-  imports: [ConfigModule],
-  inject: [ConfigService],
   useFactory: async (): Promise<TypeOrmModuleOptions> => {
     return {
       type: 'postgres',
@@ -41,6 +38,5 @@ export const typeOrmConfig: DataSourceOptions = {
   extra: {
     charset: 'utf8mb4_unicode_ci',
   },
-  synchronize: false,
   logging: true,
 };

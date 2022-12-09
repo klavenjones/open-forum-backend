@@ -83,6 +83,8 @@ To run this application locally, the first step is to create a local .env file i
 
 _Please note, in order run this project with your local database, you need an existing postgres username, and password. Some machines will have a superuser by default, when installed, but there may be cases where you need to create a role for postgres_.
 
+_Please note, in order run this project with your local database, you need an existing postgres username, and password. Some machines will have a superuser by default, when installed, but there may be cases where you need to create a role for postgres_.
+
 ```bash
 
 # src/common/.env.example
