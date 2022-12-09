@@ -3,18 +3,18 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import { UserModule } from '../src/api/user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CreateUserDto } from '../src/api/user/user.dto';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { UserDto } from '../src/api/user/dto/user.dto';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
 
 describe('Users API Testing (e2e)', () => {
   let app: INestApplication;
-  const createUser: CreateUserDto = { username: 'Klaven', isAdmin: false };
+  const createUser: UserDto = { username: 'Klaven', password: 'tester12' };
   const result = {
     id: expect.any(Number),
     username: 'Klaven',
+    password: expect.any(String),
     isAdmin: false,
     createdAt: expect.any(String),
     updatedAt: expect.any(String),
@@ -26,7 +26,6 @@ describe('Users API Testing (e2e)', () => {
       imports: [
         UserModule,
         TypeOrmModule.forRootAsync({
-          imports: [ConfigModule],
           useFactory: () => ({
             type: 'postgres',
             host: process.env.TEST_DATABASE_HOST,
@@ -38,7 +37,6 @@ describe('Users API Testing (e2e)', () => {
             autoLoadEntities: true,
             dropSchema: true,
           }),
-          inject: [ConfigService],
         }),
       ],
     }).compile();
@@ -49,25 +47,36 @@ describe('Users API Testing (e2e)', () => {
   });
 
   describe('Create a new user [POST /users]', () => {
-    it('should return a Bad Request 400 error when a user does not send isAdmin in the request', () => {
-      const badRequest = { username: 'Klaven' };
+    it('should return a Bad Request 400 error when a user forgets to send username in the request', () => {
+      const badRequest = { password: 'tester' };
       return request(app.getHttpServer())
         .post('/users')
         .send(badRequest)
         .expect(400)
         .then(({ body }) => {
-          expect(body.message[0]).toEqual('isAdmin must be a boolean value');
+          expect(body.message[1]).toEqual('username must be longer than or equal to 6 characters');
         });
     });
 
-    it('should return a Bad Request 400 error when a user forgets to send username in the request', () => {
-      const badRequest = { isAdmin: true };
+    it('should return a Bad Request 400 error when a user sends a short username in the request', () => {
+      const badRequest = { username: 'apple', password: 'tester12' };
       return request(app.getHttpServer())
         .post('/users')
         .send(badRequest)
         .expect(400)
         .then(({ body }) => {
-          expect(body.message[0]).toEqual('username should not be empty');
+          expect(body.message[0]).toEqual('username must be longer than or equal to 6 characters');
+        });
+    });
+
+    it('should return a Bad Request 400 error when a user sends a short password in the request', () => {
+      const badRequest = { username: 'apples', password: 'tester' };
+      return request(app.getHttpServer())
+        .post('/users')
+        .send(badRequest)
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.message[0]).toEqual('password must be longer than or equal to 8 characters');
         });
     });
 
@@ -77,9 +86,14 @@ describe('Users API Testing (e2e)', () => {
         .send({})
         .expect(400)
         .then(({ body }) => {
-          expect(body.message[0]).toEqual('username should not be empty');
-          expect(body.message[1]).toEqual('username must be a string');
-          expect(body.message[2]).toEqual('isAdmin must be a boolean value');
+          expect(body.message.includes('username must be longer than or equal to 6 characters')).toBe(true);
+          expect(body.message.includes('username must be shorter than or equal to 30 characters')).toBe(true);
+          expect(body.message.includes('username should not be empty')).toBe(true);
+          expect(body.message.includes('username must be a string')).toBe(true);
+          expect(body.message.includes('password must be longer than or equal to 8 characters')).toBe(true);
+          expect(body.message.includes('password must be shorter than or equal to 64 characters')).toBe(true);
+          expect(body.message.includes('password should not be empty')).toBe(true);
+          expect(body.message.includes('password must be a string')).toBe(true);
         });
     });
 
