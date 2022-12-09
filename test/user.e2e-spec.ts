@@ -10,7 +10,7 @@ dotenv.config();
 
 describe('Users API Testing (e2e)', () => {
   let app: INestApplication;
-  const createUser: UserDto = { username: 'Klaven', password: 'tester' };
+  const createUser: UserDto = { username: 'Klaven', password: 'tester12' };
   const result = {
     id: expect.any(Number),
     username: 'Klaven',
@@ -54,7 +54,29 @@ describe('Users API Testing (e2e)', () => {
         .send(badRequest)
         .expect(400)
         .then(({ body }) => {
-          expect(body.message[1]).toEqual('username should not be empty');
+          expect(body.message[1]).toEqual('username must be longer than or equal to 6 characters');
+        });
+    });
+
+    it('should return a Bad Request 400 error when a user sends a short username in the request', () => {
+      const badRequest = { username: 'apple', password: 'tester12' };
+      return request(app.getHttpServer())
+        .post('/users')
+        .send(badRequest)
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.message[0]).toEqual('username must be longer than or equal to 6 characters');
+        });
+    });
+
+    it('should return a Bad Request 400 error when a user sends a short password in the request', () => {
+      const badRequest = { username: 'apples', password: 'tester' };
+      return request(app.getHttpServer())
+        .post('/users')
+        .send(badRequest)
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.message[0]).toEqual('password must be longer than or equal to 8 characters');
         });
     });
 
@@ -64,10 +86,12 @@ describe('Users API Testing (e2e)', () => {
         .send({})
         .expect(400)
         .then(({ body }) => {
-          expect(body.message.includes('username must be shorter than or equal to 120 characters')).toBe(true);
+          expect(body.message.includes('username must be longer than or equal to 6 characters')).toBe(true);
+          expect(body.message.includes('username must be shorter than or equal to 30 characters')).toBe(true);
           expect(body.message.includes('username should not be empty')).toBe(true);
           expect(body.message.includes('username must be a string')).toBe(true);
-          expect(body.message.includes('password must be shorter than or equal to 60 characters')).toBe(true);
+          expect(body.message.includes('password must be longer than or equal to 8 characters')).toBe(true);
+          expect(body.message.includes('password must be shorter than or equal to 64 characters')).toBe(true);
           expect(body.message.includes('password should not be empty')).toBe(true);
           expect(body.message.includes('password must be a string')).toBe(true);
         });

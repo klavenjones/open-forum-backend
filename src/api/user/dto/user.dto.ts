@@ -1,21 +1,21 @@
 import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
 
-const PW_MAX_LENGTh = 64;
-const USERNAME_MAX_LENGTh = 30;
-const PW_MIN_LENGTh = 8;
-const USERNAME_MIN_LENGTh = 6;
+const PW_MIN_LENGTH = 8;
+const PW_MAX_LENGTH = 64;
+
+const USERNAME_MIN_LENGTH = 6;
+const USERNAME_MAX_LENGTH = 30;
 
 export class UserDto {
   @IsString()
   @IsNotEmpty()
-  @MaxLength(USERNAME_MIN_LENGTh)
-  @MaxLength(USERNAME_MAX_LENGTh)
+  @MinLength(USERNAME_MIN_LENGTH)
+  @MaxLength(USERNAME_MAX_LENGTH)
   public username: string;
 
   @IsString()
   @IsNotEmpty()
-  
-  @MinLength(PW_MIN_LENGTh)
-  @MaxLength(PW_MAX_LENGTh)
+  @MinLength(PW_MIN_LENGTH)
+  @MaxLength(PW_MAX_LENGTH)
   public password;
 }
