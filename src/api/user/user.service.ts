@@ -18,7 +18,7 @@ export class UserService {
   }
 
   public getUserByUsername(username: string): Promise<User> {
-    return this.userRepository.findOneBy({ username });
+    return this.userRepository.findOneBy({ username: username });
   }
 
   public createUser(body: UserDto): Promise<User> {
