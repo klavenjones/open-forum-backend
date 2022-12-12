@@ -8,7 +8,7 @@ on:
 
 jobs:
   container-job:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container: node:16.13
 
     services:
@@ -28,10 +28,10 @@ jobs:
 
     steps:
       - name: Copy repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -39,7 +39,7 @@ jobs:
         run: npm ci
 
       - name: ESLint
-        run:  npm run lint
+        run: npm run lint
 
       - name: Prettier
         run: npm run prettier:check
