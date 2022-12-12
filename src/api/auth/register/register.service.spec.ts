@@ -56,7 +56,7 @@ describe('RegisterService', () => {
       await registerService.register({ ...testRegistered });
       expect(userService.createUser).toHaveBeenCalled();
     });
-    it('should return the correct user.', async () => {
+    it('should return the user when created.', async () => {
       jest.spyOn(userService, 'createUser').mockResolvedValue(
         new Promise<User>(resolve => {
           resolve({ ...testUser, password: bcrypt.hashSync(testUser.password, 8) });
@@ -64,9 +64,10 @@ describe('RegisterService', () => {
       );
 
       const user = await registerService.register({ ...testRegistered });
+      expect(user).toBeDefined();
       expect(user.username).toBe('TESTUSER');
-      expect(user.isAdmin).toBe(false);
     });
+
     it('should return the correct user with hashed password.', async () => {
       jest.spyOn(userService, 'createUser').mockResolvedValue(
         new Promise<User>(resolve => {
@@ -76,7 +77,6 @@ describe('RegisterService', () => {
 
       const user = await registerService.register({ ...testRegistered });
       expect(bcrypt.compareSync(testUser.password, user.password)).toBe(true);
-      expect(bcrypt.compareSync('AnotherPassword', user.password)).toBe(false);
     });
   });
 });
