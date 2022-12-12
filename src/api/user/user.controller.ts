@@ -14,8 +14,8 @@ export class UserController {
   }
 
   @Get(':id')
-  public getUser(@Param('id', ParseIntPipe) id: number): Promise<User> {
-    return this.service.getUser(id);
+  public getUserById(@Param('id', ParseIntPipe) id: number): Promise<User> {
+    return this.service.getUserById(id);
   }
 
   @Post()

@@ -68,15 +68,27 @@ describe('UserService', () => {
     });
   });
 
-  describe('getUser', () => {
+  describe('getUserById', () => {
     it('should be call the userRepository.findByOne method', async () => {
-      await service.getUser(1);
+      await service.getUserById(1);
       expect(userRepository.findOneBy).toHaveBeenCalled();
     });
 
     it('should call userRepository.findByOne with the correct parameters', async () => {
-      await service.getUser(1);
+      await service.getUserById(1);
       expect(userRepository.findOneBy).toHaveBeenCalledWith({ id: 1 });
+    });
+  });
+
+  describe('getUserByUsername', () => {
+    it('should be call the userRepository.findByOne method', async () => {
+      await service.getUserByUsername('TESTUSER');
+      expect(userRepository.findOneBy).toHaveBeenCalled();
+    });
+
+    it('should call userRepository.findByOne with the correct parameters', async () => {
+      await service.getUserByUsername('TESTUSER');
+      expect(userRepository.findOneBy).toHaveBeenCalledWith({ username: 'TESTUSER' });
     });
   });
 });

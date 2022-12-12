@@ -12,7 +12,7 @@ describe('UserController', () => {
       provide: UserService,
       useFactory: () => ({
         findAll: jest.fn(),
-        getUser: jest.fn(),
+        getUserById: jest.fn(),
         createUser: jest.fn(),
       }),
     };
@@ -39,8 +39,8 @@ describe('UserController', () => {
 
   describe('getUser', () => {
     it('should call service.getUser with the correct id parameter', async () => {
-      await controller.getUser(1);
-      expect(await service.getUser).toHaveBeenCalledWith(1);
+      await controller.getUserById(1);
+      expect(await service.getUserById).toHaveBeenCalledWith(1);
     });
   });
 
