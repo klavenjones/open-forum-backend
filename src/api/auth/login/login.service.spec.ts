@@ -49,14 +49,16 @@ describe('LoginService', () => {
   });
 
   describe('validateUser', () => {
-    it('should call userService.getUserByUsername atleast once.', async () => {
+    it('calls userService.getUserByUsername method.', async () => {
       jest.spyOn(userService, 'getUserByUsername').mockResolvedValue({ ...testUser });
 
       await loginService.validateUser(testLoginUser.username, testLoginUser.password);
       expect(userService.getUserByUsername).toHaveBeenCalled();
+      expect(userService.getUserByUsername).toBeCalledWith(testLoginUser.username);
     });
+
     it('should return user when user password match', async () => {
-      const { password, ...rest } = testUser;
+      const { password, ...rest } = testUser; // eslint-disable-line
       jest.spyOn(userService, 'getUserByUsername').mockResolvedValue(
         new Promise<User>(resolve => {
           resolve({ ...testUser, password: bcrypt.hashSync(testUser.password, 8) });

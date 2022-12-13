@@ -9,6 +9,7 @@ describe('UserService', () => {
   let userRepository: Repository<User>;
 
   const testUser = {
+    id: 1,
     username: 'TESTUSER',
     password: 'testing123',
     isAdmin: false,
@@ -82,14 +83,14 @@ describe('UserService', () => {
   });
 
   describe('getUserByUsername', () => {
-    it('should be call the userRepository.findByOne method', async () => {
-      await service.getUserByUsername('TESTUSER');
-      expect(userRepository.findOneBy).toHaveBeenCalled();
-    });
+    it('should be call the userRepository.findByOne method and return the correct user', async () => {
+      jest.spyOn(userRepository, 'findOneBy').mockResolvedValue(testUser);
 
-    it('should call userRepository.findByOne with the correct parameters', async () => {
-      await service.getUserByUsername('TESTUSER');
+      const user = await service.getUserByUsername('TESTUSER');
+
+      expect(userRepository.findOneBy).toHaveBeenCalled();
       expect(userRepository.findOneBy).toHaveBeenCalledWith({ username: 'TESTUSER' });
+      expect(user.username).toBe('TESTUSER');
     });
   });
 });

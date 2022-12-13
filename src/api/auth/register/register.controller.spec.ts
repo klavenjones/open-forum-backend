@@ -21,7 +21,8 @@ describe('RegisterController', () => {
       provide: UserService,
       useFactory: () => ({
         findAll: jest.fn(),
-        getUser: jest.fn(),
+        getUserByUsername: jest.fn(),
+        getUserByUserId: jest.fn(),
         createUser: jest.fn(),
       }),
     };
