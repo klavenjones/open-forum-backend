@@ -106,6 +106,10 @@ TEST_DATABASE_USER=
 TEST_DATABASE_PORT=
 TEST_DATABASE_PASSWORD=
 
+
+
+JWT_SECRET=<Add a jwt secret for authentication>
+
 ```
 
 ---
