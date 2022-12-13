@@ -5,22 +5,21 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoginUserDto } from '../src/api/auth/login/dto/login-user.dto';
 import * as dotenv from 'dotenv';
 import { RegisterUserDto } from '../src/api/auth/register/dto/register-user.dto';
-import * as bcrypt from 'bcrypt';
-import { AppModule } from '../src/app.module';
-import { UserService } from '../src/api/user/user.service';
+import { LoginModule } from '../src/api/auth/login/login.module';
+import { RegisterModule } from '../src/api/auth/register/register.module';
 
 dotenv.config();
 
 describe('Login user API Testing (e2e)', () => {
-  let userService: UserService;
   let app: INestApplication;
-  const registerUserDto: RegisterUserDto = { username: 'KlavenJ', password: bcrypt.hashSync('tester12', 8) };
-  const loginUser: LoginUserDto = { username: 'KlavenJ', password: 'tester12' };
+  const registerUserDto: RegisterUserDto = { username: 'KlavenJones', password: 'tester123' };
+  const loginUser: LoginUserDto = { username: 'KlavenJones', password: 'tester123' };
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
-        AppModule,
+        LoginModule,
+        RegisterModule,
         TypeOrmModule.forRootAsync({
           useFactory: () => ({
             type: 'postgres',
@@ -40,10 +39,9 @@ describe('Login user API Testing (e2e)', () => {
     app = moduleFixture.createNestApplication();
     app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
-    userService = moduleFixture.get<UserService>(UserService);
-    await userService.createUser(registerUserDto);
-
     await app.init();
+    //Create User
+    await request(app.getHttpServer()).post('/auth/register').send(registerUserDto);
   });
 
   describe('Login a user [POST /auth/login]', () => {
