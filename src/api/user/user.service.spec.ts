@@ -9,6 +9,7 @@ describe('UserService', () => {
   let userRepository: Repository<User>;
 
   const testUser = {
+    id: 1,
     username: 'TESTUSER',
     password: 'testing123',
     isAdmin: false,
@@ -27,6 +28,7 @@ describe('UserService', () => {
             create: jest.fn(),
             save: jest.fn(),
             find: jest.fn(),
+            findOne: jest.fn(),
             findOneBy: jest.fn(),
           },
         },
@@ -68,15 +70,27 @@ describe('UserService', () => {
     });
   });
 
-  describe('getUser', () => {
+  describe('getUserById', () => {
     it('should be call the userRepository.findByOne method', async () => {
-      await service.getUser(1);
+      await service.getUserById(1);
       expect(userRepository.findOneBy).toHaveBeenCalled();
     });
 
     it('should call userRepository.findByOne with the correct parameters', async () => {
-      await service.getUser(1);
+      await service.getUserById(1);
       expect(userRepository.findOneBy).toHaveBeenCalledWith({ id: 1 });
+    });
+  });
+
+  describe('getUserByUsername', () => {
+    it('should be call the userRepository.findByOne method and return the correct user', async () => {
+      jest.spyOn(userRepository, 'findOneBy').mockResolvedValue(testUser);
+
+      const user = await service.getUserByUsername('TESTUSER');
+
+      expect(userRepository.findOneBy).toHaveBeenCalled();
+      expect(userRepository.findOneBy).toHaveBeenCalledWith({ username: 'TESTUSER' });
+      expect(user.username).toBe('TESTUSER');
     });
   });
 });
