@@ -17,7 +17,7 @@ export class LoginController {
 
     res.cookie('auth-cookie', secretData, {
       httpOnly: true,
-      expires: new Date(new Date().getTime() + 86409000),
+      expires: new Date(new Date().getTime() + 30 * 60 * 1000), //Expires in 30 minutes ,
     });
 
     return { message: 'Success' };
