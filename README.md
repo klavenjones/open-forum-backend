@@ -90,6 +90,7 @@ _Please note, in order run this project with your local database, you need an ex
 # src/common/.env.example
 
 BASE_URL=http://localhost:3000
+CORS_ORIGINS=http://localhost:5173 - Set this to the client\'s URL making the request to this server
 
 DATABASE_HOST=<This should be the database Hostname, for example, this would be set to localhost, when running this locally>
 DATABASE_NAME=<Database name - This will be the name of the database you will work with in this environment>
@@ -105,6 +106,10 @@ TEST_DATABASE_HOST=
 TEST_DATABASE_USER=
 TEST_DATABASE_PORT=
 TEST_DATABASE_PASSWORD=
+
+
+
+JWT_SECRET=<Add a jwt secret for authentication>
 
 ```
 
