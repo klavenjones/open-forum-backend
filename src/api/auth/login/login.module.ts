@@ -9,7 +9,6 @@ import { LoginController } from './login.controller';
 import { LoginService } from './login.service';
 import { JwtStrategy } from '../strategies/jwt.strategy';
 
-
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
