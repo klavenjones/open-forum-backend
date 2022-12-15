@@ -5,6 +5,7 @@ import { UserService } from '../../user/user.service';
 import { LoginUserDto } from './dto/login-user.dto';
 import { LoginService } from './login.service';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 describe('LoginService', () => {
   let loginService: LoginService;
@@ -27,6 +28,7 @@ describe('LoginService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
+        JwtService,
         LoginService,
         UserService,
         {
@@ -40,6 +42,7 @@ describe('LoginService', () => {
         },
       ],
     }).compile();
+
     userService = module.get<UserService>(UserService);
     loginService = module.get<LoginService>(LoginService);
   });
