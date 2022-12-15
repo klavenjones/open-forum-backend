@@ -3,6 +3,8 @@ import { Client } from 'pg';
 
 dotenv.config();
 
+
+
 //Initial Database connection. Default Database configuration, this will allow you to connect and create tables.
 const pgclient = new Client({
   host: process.env.DATABASE_HOST,

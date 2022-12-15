@@ -7,11 +7,9 @@ import { UserService } from '../../user/user.service';
 import { LocalStrategy } from '../strategies/local.strategy';
 import { LoginController } from './login.controller';
 import { LoginService } from './login.service';
-import * as dotenv from 'dotenv';
 import { JwtStrategy } from '../strategies/jwt.strategy';
 
-dotenv.config();
-
+console.log('Login Module', process.env.JWT_SECRET);
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
