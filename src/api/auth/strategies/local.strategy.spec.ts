@@ -49,7 +49,7 @@ describe('LocalStrategy', () => {
     it('should use the loginService properly', async () => {
       jest.spyOn(loginService, 'validateUser').mockResolvedValue(mockReturnedUser);
 
-      const user = await localStrategy.validate(loginData.username, loginData.password);
+      await localStrategy.validate(loginData.username, loginData.password);
 
       expect(loginService.validateUser).toHaveBeenCalled();
       expect(loginService.validateUser).toHaveBeenCalledWith(loginData.username, loginData.password);
