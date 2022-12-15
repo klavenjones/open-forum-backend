@@ -9,7 +9,7 @@ import { LoginController } from './login.controller';
 import { LoginService } from './login.service';
 import { JwtStrategy } from '../strategies/jwt.strategy';
 
-console.log('Login Module', process.env.JWT_SECRET);
+
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
